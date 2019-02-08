@@ -9,7 +9,7 @@
           <!-- value is what you are going to add once you check the box -->
           <!-- <input type="checkbox" :id="answer.id" :value="answer" v-model="voted">
           <label :for="answer.id">{{answer.choice}}</label>-->
-          <input type="radio" :id="answer.id" :value="idx" v-model="voted">
+          <input type="radio" :id="answer.id" :value="answer.id" v-model="voted">
           <label :for="answer.id">{{ answer.choice }}</label>
         </div>
         <button>Rock the Vote!</button>
@@ -30,16 +30,23 @@ export default {
       // dummy data for now until we hook up database
       // possibly grab all data and then shuffle using Fisher-Yates
       polls: [],
-      voted: null
+      voted: null,
+      randomPoll: []
     };
   },
   methods: {
     countVote(idx) {
+      // increase vote count by 1 of the choice passed in
       const choice = this.polls[0].answers[idx];
       choice.votes++;
       console.log(choice.votes, choice.choice, "VOTES");
-      // increase vote count by 1
       // send updated poll question to db can grab one doc by using .doc(id)
+      db.collection("polls")
+        .doc(this.polls[0].id)
+        .update({
+          // update array with new vote counts
+          answers: this.polls[0].answers
+        });
       // after async function runs, in the then() push router to stats page
       // maybe send info somehow to stats page?
     }
