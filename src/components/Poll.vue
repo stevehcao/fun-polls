@@ -46,9 +46,29 @@ export default {
         .update({
           // update array with new vote counts
           answers: this.polls[0].answers
+        })
+        .then(() => {
+          console.log("routing here");
+        })
+        .catch(err => {
+          console.log(err);
         });
       // after async function runs, in the then() push router to stats page
       // maybe send info somehow to stats page?
+    },
+    shuffle(arr) {
+      // fisher-yates shuffle
+      let currIdx = arr.length;
+      let randomIdx = 0;
+
+      while (currIdx) {
+        randomIdx = Math.floor(Math.random() * currIdx);
+        currIdx--;
+
+        // swap
+        [arr[currIdx], arr[randomIdx]] = [arr[randomIdx], arr[currIdx]];
+      }
+      return arr;
     }
   },
   // checking check box form
@@ -68,10 +88,12 @@ export default {
           queryPolls.push(poll);
         });
         this.polls = queryPolls;
+        this.shuffle(this.polls);
       })
       .catch(err => {
         console.log(err);
       });
+    // this.randomPoll[0] = polls[0];
   }
 };
 </script>
