@@ -1,6 +1,5 @@
 <template>
   <div class="poll">
-    <h1>Poll goes here</h1>
     <div v-if="polls[0]" class="question">
       <h3>{{ polls[0].question }}</h3>
       <form @submit.prevent="countVote(voted)">
@@ -48,7 +47,12 @@ export default {
           answers: this.polls[0].answers
         })
         .then(() => {
-          console.log("routing here");
+          // routing here to new stats page to display stats for that question
+          // include in the route params the doc.id
+          this.$router.push({
+            name: "Stats",
+            params: { doc_id: this.polls[0].id }
+          });
         })
         .catch(err => {
           console.log(err);
@@ -88,6 +92,7 @@ export default {
           queryPolls.push(poll);
         });
         this.polls = queryPolls;
+        // shuffle polls here and only display one to the top
         this.shuffle(this.polls);
       })
       .catch(err => {

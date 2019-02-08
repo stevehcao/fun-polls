@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <nav>possible nav/header here</nav>
     <h1>Home Page</h1>
     <Poll/>
   </div>
