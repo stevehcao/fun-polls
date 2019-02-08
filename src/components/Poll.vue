@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import db from "@/db";
+
 export default {
   name: "Poll",
   data() {
