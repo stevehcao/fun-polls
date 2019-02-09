@@ -4,19 +4,22 @@
       Stats for
       <span class="question-title red-text accent-2">"{{ poll.question }}"</span> question
     </h2>
+    <!-- show data vis here -->
+    <!-- pass in data from query as props -->
     <ul class="answer-choices">
       <div v-for="answer in poll.answers" :key="answer.id">
         <li>{{answer.choice}}: {{answer.votes}}</li>
       </div>
     </ul>
   </div>
-  <h2 v-else>Loading...</h2>
+  <h2 v-else>Loading stats...</h2>
 </template>
 
 
 <script>
 // url params will have doc.id as doc_id, can use it for DB
 import db from "@/db";
+import DoughnutChart from "@/components/DoughnutChart";
 
 export default {
   name: "Stats",

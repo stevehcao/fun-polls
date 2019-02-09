@@ -58,7 +58,6 @@ export default {
             queryPolls.push(poll);
           });
           this.polls = queryPolls;
-          console.log(this.polls);
           // shuffle polls here and only display one to the top
           this.shuffle(this.polls);
           this.loaded = true;
