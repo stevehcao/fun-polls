@@ -1,17 +1,19 @@
 <template>
-  <div class="poll">
+  <div class="poll container">
     <div v-if="polls[0]" class="question">
       <h3>{{ polls[0].question }}</h3>
       <form @submit.prevent="countVote(voted)">
         <!-- radio buttons or checkbox for each question choice have to loop through the ans array -->
         <div v-for="(answer, idx) in polls[0].answers" :key="idx">
-          <!-- value is what you are going to add once you check the box -->
-          <!-- <input type="checkbox" :id="answer.id" :value="answer" v-model="voted">
-          <label :for="answer.id">{{answer.choice}}</label>-->
-          <input type="radio" :id="answer.id" :value="answer.id" v-model="voted">
-          <label :for="answer.id">{{ answer.choice }}</label>
+          <!-- before materialize -->
+          <!-- <input type="radio" :id="answer.id" :value="answer.id" v-model="voted">
+          <label :for="answer.id">{{ answer.choice }}</label>-->
+          <label>
+            <input name="group1" type="radio" :value="answer.id" v-model="voted" checked>
+            <span>{{answer.choice}}</span>
+          </label>
         </div>
-        <button>Rock the Vote!</button>
+        <button class="btn">Rock the Vote!</button>
       </form>
     </div>
     <div v-else class="loading">Loading poll question...</div>
@@ -25,8 +27,6 @@ export default {
   name: "Poll",
   data() {
     return {
-      // polls are an array of objects that contains poll questions and answers
-      // dummy data for now until we hook up database
       // possibly grab all data and then shuffle using Fisher-Yates
       polls: [],
       voted: null,
