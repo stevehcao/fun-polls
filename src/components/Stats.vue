@@ -1,10 +1,10 @@
 <template>
-  <div v-if="loaded">
-    <h1>
+  <div class="stats container" v-if="loaded">
+    <h2>
       Stats for
-      <span class="question-title">"{{ poll.question }}"</span> question
-    </h1>
-    <ul>
+      <span class="question-title red-text accent-2">"{{ poll.question }}"</span> question
+    </h2>
+    <ul class="answer-choices">
       <div v-for="answer in poll.answers" :key="answer.id">
         <li>{{answer.choice}}: {{answer.votes}}</li>
       </div>
@@ -20,12 +20,14 @@ import db from "@/db";
 
 export default {
   name: "Stats",
+
   data() {
     return {
       poll: {},
       loaded: false // will only be a single poll data
     };
   },
+
   created() {
     const docId = this.$route.params.doc_id;
     const ref = db.collection("polls").doc(docId);
@@ -47,6 +49,14 @@ export default {
 <style scoped>
 li {
   list-style: none;
+}
+
+.stats {
+  max-width: 800px;
+}
+
+.answer-choices {
+  margin: 10px;
 }
 </style>
 

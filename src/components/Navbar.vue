@@ -24,5 +24,9 @@ export default {
 nav {
   padding: 0 20px;
 }
+
+.nav-title {
+  cursor: pointer;
+}
 </style>
 

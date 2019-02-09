@@ -1,18 +1,21 @@
 <template>
   <div class="home">
-    <h1>Home Page</h1>
     <Poll/>
   </div>
 </template>
 
 <script>
 import Poll from "@/components/Poll";
+import db from "@/db";
+// import util from '@/util.js'
 
 export default {
   name: "Home",
+
   data() {
     return {};
   },
+
   components: {
     Poll
   }
