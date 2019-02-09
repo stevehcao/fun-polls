@@ -1,13 +1,31 @@
 <script>
-import { Doughnut } from "vue-chartjs";
+import { Doughnut, mixins } from "vue-chartjs";
+
 export default {
   extends: Doughnut,
+  data() {
+    return {
+      // dummy data
+      // chartData: {
+      //   labels: ["Green", "Red", "Blue"],
+      //   datasets: [
+      //     {
+      //       label: "Data One",
+      //       backgroundColor: ["#41B883", "#E46651", "#00D8FF"],
+      //       data: [3, 10, 5]
+      //     }
+      //   ]
+      // }
+    };
+  },
   props: {
     chartData: {
-      type: Object
+      type: Object,
+      default: null
     },
     options: {
-      type: Object
+      type: Object,
+      default: null
     }
   },
   mounted() {
@@ -15,3 +33,7 @@ export default {
   }
 };
 </script>
+
+<style>
+</style>
+
