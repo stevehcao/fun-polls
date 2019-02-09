@@ -16,10 +16,7 @@
             </label>
           </div>
         </div>
-        <button class="btn">
-          Rock the Vote!
-          <i class="material-icons">send</i>
-        </button>
+        <button class="btn">Vote now!</button>
       </form>
     </div>
     <div v-else class="loading">Loading poll question...</div>
@@ -40,6 +37,9 @@ export default {
       loaded: false
       // randomPoll: []
     };
+  },
+  created() {
+    this.getQuestions();
   },
   // props: { polls: Array, voted: Number, test: String } // passing props from Home
   methods: {
@@ -93,7 +93,7 @@ export default {
       // after async function runs, in the then() push router to stats page
       // maybe send info somehow to stats page?
     },
-    // maybe able to take out
+
     shuffle(arr) {
       // fisher-yates shuffle
       let currIdx = arr.length;
@@ -103,25 +103,11 @@ export default {
         randomIdx = Math.floor(Math.random() * currIdx);
         currIdx--;
 
-        // swap
+        // swap ES6
         [arr[currIdx], arr[randomIdx]] = [arr[randomIdx], arr[currIdx]];
       }
       return arr;
-    },
-    randomNumber(min, max) {
-      const randomNum = Math.random() * (max - min) + min;
-      return Math.floor(randomNum);
     }
-  },
-  // checking check box form
-  updated() {
-    console.log(this.voted);
-    // console.log()
-  },
-  created() {
-    this.getQuestions();
-    console.log(this.polls, "POLLS COMP");
-    // console.log(test, "POLLS TEST");
   }
 };
 </script>

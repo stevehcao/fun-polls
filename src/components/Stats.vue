@@ -2,7 +2,7 @@
   <div class="stats container" v-if="loaded">
     <h3>
       Stats for
-      <span class="question-title red-text accent-2">"{{ poll.question }}"</span> question
+      <span class="question-title red-text accent-2">"{{ poll.question }}"</span> poll
     </h3>
     <!-- show data vis here -->
     <!-- pass in data from query as props -->
