@@ -57,7 +57,6 @@ export default {
       .get()
       .then(snapshot => {
         this.poll = snapshot.data();
-        console.log(this.poll, "SINGLE POLL BUILD CHART DATA FROM THIS");
         this.loaded = true;
         // method to format chart data to pass as prop to chart component
         this.formatChartData();

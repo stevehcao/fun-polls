@@ -1,6 +1,15 @@
 <template>
   <div class="poll container">
-    <div v-if="loaded" class="question">
+    <div v-if="seenAllQs">
+      You have taken all the polls... click below for options!
+      <button
+        class="btn"
+        @click="retakePolls"
+      >Retake Polls</button>
+      <!-- another button to show what you voted on -->
+      <button></button>
+    </div>
+    <div v-else-if="loaded" class="question">
       <h3>{{ polls[0].question }}</h3>
       <!-- <form @submit.prevent="$emit('countVote', voted)"> -->
       <form @submit.prevent="countVote(voted)">
@@ -34,8 +43,8 @@ export default {
       // or helper functions to generate random element in array
       polls: [],
       voted: null,
-      loaded: false
-      // randomPoll: []
+      loaded: false,
+      seenAllQs: false
     };
   },
   created() {
@@ -44,6 +53,15 @@ export default {
   // props: { polls: Array, voted: Number, test: String } // passing props from Home
   methods: {
     getQuestions() {
+      const numQs = Number(localStorage.getItem("numQuestions"));
+      const seenQs = Number(localStorage.getItem("seenQs"));
+      // check numQs to seenQs and if they match you seen everything
+      console.log(this.seenAllQs);
+      if (numQs === seenQs && localStorage.getItem("numQuestions")) {
+        // don't query and change flag
+        this.seenAllQs = true;
+        return;
+      }
       // fetch data from db
       const pollsRef = db.collection("polls");
       // limit query to 100 in case there are too many poll questions
@@ -51,15 +69,25 @@ export default {
         .limit(100)
         .get()
         .then(snapshot => {
+          // store collection size in local host to check if you are out of questions
+          // will always update in case there are more questions
+          localStorage.setItem("numQuestions", snapshot.size);
           const queryPolls = [];
           snapshot.forEach(doc => {
-            const poll = doc.data();
-            poll.id = doc.id;
-            queryPolls.push(poll);
+            // check local storage for doc id
+            // only build out poll if doc id not seen
+            if (!localStorage.getItem(doc.id)) {
+              const poll = doc.data();
+              poll.id = doc.id;
+              queryPolls.push(poll);
+            }
           });
-          this.polls = queryPolls;
-          // shuffle polls here and only display one to the top
-          this.shuffle(this.polls);
+          // check if there is something to build in case you have seen all the questions
+          if (queryPolls.length > 0) {
+            this.polls = queryPolls;
+            // shuffle polls here and only display one to the top
+            this.shuffle(this.polls);
+          }
           this.loaded = true;
         })
         .catch(err => {
@@ -67,11 +95,27 @@ export default {
         });
       // this.randomPoll[0] = polls[0];
     },
+
+    storeSeenQs(choice) {
+      // storing doc.id and your vote in local storage
+      // maybe move to helper function
+      localStorage.setItem(this.polls[0].id, choice.choice);
+      if (!localStorage.getItem("seenQs")) {
+        localStorage.setItem("seenQs", 1);
+      } else {
+        let seenQ = Number(localStorage.getItem("seenQs"));
+        seenQ++;
+        // console.log(seenQ, "SEEN");
+        localStorage.setItem("seenQs", seenQ);
+      }
+    },
+
     countVote(idx) {
       // increase vote count by 1 of the choice passed in
       const choice = this.polls[0].answers[idx];
       choice.votes++;
-      console.log(choice.votes, choice.choice, "VOTES");
+
+      this.storeSeenQs(choice);
       // send updated poll question to db can grab one doc by using .doc(id)
       db.collection("polls")
         .doc(this.polls[0].id)
@@ -107,6 +151,11 @@ export default {
         [arr[currIdx], arr[randomIdx]] = [arr[randomIdx], arr[currIdx]];
       }
       return arr;
+    },
+
+    retakePolls() {
+      localStorage.clear();
+      this.$router.go();
     }
   }
 };
