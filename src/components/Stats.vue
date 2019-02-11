@@ -39,6 +39,12 @@ export default {
         // cutoutPercentage: // (0-100) to change size of doughnut
         animation: {
           animateScale: true
+        },
+        legend: {
+          labels: {
+            fontSize: 16,
+            fontStyle: "bold"
+          }
         }
       },
       loaded: false
