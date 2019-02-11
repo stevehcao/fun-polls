@@ -8,7 +8,7 @@
     <!-- pass in data from query as props -->
     <DoughnutChart :chartData="chartData" :options="options"/>
   </div>
-  <h2 v-else>Loading stats...</h2>
+  <div v-else class="lds-dual-ring"></div>
 </template>
 
 
@@ -87,6 +87,35 @@ li {
 
 .answer-choices {
   margin: 10px;
+}
+
+.lds-dual-ring {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 600px;
+  color: #00897b;
+}
+
+.lds-dual-ring:after {
+  content: " ";
+  display: block;
+  width: 200px;
+  height: 200px;
+  margin: 1px;
+  border-radius: 50%;
+  border: 15px solid #00897b;
+  border-color: #00897b transparent #00897b transparent;
+  animation: lds-dual-ring 1.2s linear infinite;
+}
+
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 </style>
 
