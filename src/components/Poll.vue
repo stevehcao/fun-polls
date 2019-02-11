@@ -97,15 +97,26 @@ export default {
 
     storeSeenQs(choice) {
       // storing doc.id and your vote in local storage this.polls[0].id
-      // maybe move to helper function
       localStorage.setItem(this.polls[0].id, choice.choice);
-      if (!localStorage.getItem("seenQs")) {
-        localStorage.setItem("seenQs", 1);
-      } else {
+      // check if seenQs is in localStorage if it is that means seenQs and ansArr is already initialized
+      // can proceed to access and manipulate localStorage
+      if (localStorage.getItem("seenQs")) {
         let seenQ = Number(localStorage.getItem("seenQs"));
+        let ansArr = JSON.parse(localStorage.getItem("ansArr"));
+        let ansObj = { question: this.polls[0].question, ans: choice.choice };
+        ansArr.push(ansObj);
+
         seenQ++;
         // console.log(seenQ, "SEEN");
         localStorage.setItem("seenQs", seenQ);
+        localStorage.setItem("ansArr", JSON.stringify(ansArr));
+      } else {
+        let ansArr = [];
+        let ansObj = { question: this.polls[0].question, ans: choice.choice };
+        ansArr.push(ansObj);
+
+        localStorage.setItem("ansArr", JSON.stringify(ansArr));
+        localStorage.setItem("seenQs", 1);
       }
     },
 
