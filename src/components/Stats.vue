@@ -2,16 +2,11 @@
   <div class="stats container" v-if="loaded">
     <h3>
       Stats for
-      <span class="question-title red-text accent-2">"{{ poll.question }}"</span> poll
+      <span class="question-title blue-text accent-2">"{{ poll.question }}"</span> poll
     </h3>
     <!-- show data vis here -->
     <!-- pass in data from query as props -->
     <DoughnutChart :chartData="chartData" :options="options"/>
-    <!-- <ul class="answer-choices">
-      <div v-for="answer in poll.answers" :key="answer.id">
-        <li>{{answer.choice}}: {{answer.votes}}</li>
-      </div>
-    </ul>-->
   </div>
   <h2 v-else>Loading stats...</h2>
 </template>
@@ -76,7 +71,6 @@ export default {
         this.chartData.labels.push(ans.choice);
         this.chartData.datasets[0].data.push(ans.votes);
       });
-      console.log(this.chartData);
     }
   }
 };

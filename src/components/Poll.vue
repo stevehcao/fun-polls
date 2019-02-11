@@ -1,15 +1,12 @@
 <template>
   <div class="poll container">
-    <div v-if="seenAllQs">
-      You have taken all the polls... click below for options!
-      <button
-        class="btn"
-        @click="retakePolls"
-      >Retake Polls</button>
+    <div v-if="seenAllQs" class="valign-wrapper seen-all-q container">
+      <p class="flow-text">You have taken all the polls... click below for options!</p>
+      <button class="btn" @click="retakePolls">Retake Polls</button>
       <!-- another button to show what you voted on -->
-      <button></button>
+      <!-- <button class="btn"></button> -->
     </div>
-    <div v-else-if="loaded" class="question">
+    <div v-else-if="loaded" class="question flow-text">
       <h3>{{ polls[0].question }}</h3>
       <!-- <form @submit.prevent="$emit('countVote', voted)"> -->
       <form @submit.prevent="countVote(voted)">
@@ -28,7 +25,7 @@
         <button class="btn">Vote now!</button>
       </form>
     </div>
-    <div v-else class="loading">Loading poll question...</div>
+    <div v-else class="loading flow-text">Loading poll question...</div>
   </div>
 </template>
 
@@ -56,7 +53,6 @@ export default {
       const numQs = Number(localStorage.getItem("numQuestions"));
       const seenQs = Number(localStorage.getItem("seenQs"));
       // check numQs to seenQs and if they match you seen everything
-      console.log(this.seenAllQs);
       if (numQs === seenQs && localStorage.getItem("numQuestions")) {
         // don't query and change flag
         this.seenAllQs = true;
@@ -76,6 +72,7 @@ export default {
           snapshot.forEach(doc => {
             // check local storage for doc id
             // only build out poll if doc id not seen
+            // might have to change to question
             if (!localStorage.getItem(doc.id)) {
               const poll = doc.data();
               poll.id = doc.id;
@@ -97,7 +94,7 @@ export default {
     },
 
     storeSeenQs(choice) {
-      // storing doc.id and your vote in local storage
+      // storing doc.id and your vote in local storage this.polls[0].id
       // maybe move to helper function
       localStorage.setItem(this.polls[0].id, choice.choice);
       if (!localStorage.getItem("seenQs")) {
@@ -168,6 +165,15 @@ export default {
 
 .answer-choices {
   margin: 15px;
+}
+
+.seen-all-q {
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 30%;
+  box-sizing: border-box;
 }
 </style>
 
