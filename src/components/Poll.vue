@@ -42,7 +42,8 @@ export default {
       polls: [],
       voted: null,
       loaded: false,
-      seenAllQs: false
+      seenAllQs: false,
+      storeAns: [] // store ans in local storage to show what you voted on
     };
   },
   created() {
