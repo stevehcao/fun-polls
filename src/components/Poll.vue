@@ -3,6 +3,8 @@
     <div v-if="seenAllQs" class="valign-wrapper seen-all-q container">
       <p class="flow-text">You have taken all the polls... click below for options!</p>
       <button class="btn" @click="retakePolls">Retake Polls</button>
+      <button class="btn" @click="showPollSummary">Poll Summary</button>
+
       <!-- another button to show what you voted on -->
       <!-- <button class="btn"></button> -->
     </div>
@@ -166,6 +168,10 @@ export default {
     retakePolls() {
       localStorage.clear();
       this.$router.go();
+    },
+
+    showPollSummary() {
+      this.$router.push({ name: "PollSummary" });
     }
   }
 };
@@ -174,6 +180,10 @@ export default {
 <style scoped>
 .poll {
   max-width: 600px;
+}
+
+button {
+  margin: 8px;
 }
 
 .answer-choices {
