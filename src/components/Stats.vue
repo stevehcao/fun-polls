@@ -34,7 +34,7 @@ export default {
           }
         ]
       },
-      // optional animation
+      // optional settings
       options: {
         // cutoutPercentage: // (0-100) to change size of doughnut
         animation: {

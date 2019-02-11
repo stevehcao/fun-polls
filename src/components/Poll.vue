@@ -4,15 +4,10 @@
       <p class="flow-text">You have taken all the polls... click below for options!</p>
       <button class="btn" @click="retakePolls">Retake Polls</button>
       <button class="btn" @click="showPollSummary">Poll Summary</button>
-
-      <!-- another button to show what you voted on -->
-      <!-- <button class="btn"></button> -->
     </div>
     <div v-else-if="loaded" class="question flow-text">
       <h3>{{ polls[0].question }}</h3>
-      <!-- <form @submit.prevent="$emit('countVote', voted)"> -->
       <form @submit.prevent="countVote(voted)">
-        <!-- radio buttons or checkbox for each question choice have to loop through the ans array -->
         <div class="answer-choices">
           <div v-for="(answer, idx) in polls[0].answers" :key="idx">
             <!-- before materialize -->
@@ -39,8 +34,6 @@ export default {
   name: "Poll",
   data() {
     return {
-      // possibly grab all data and then shuffle using Fisher-Yates
-      // or helper functions to generate random element in array
       polls: [],
       voted: null,
       loaded: false,
@@ -51,7 +44,6 @@ export default {
   created() {
     this.getQuestions();
   },
-  // props: { polls: Array, voted: Number, test: String } // passing props from Home
   methods: {
     getQuestions() {
       const numQs = Number(localStorage.getItem("numQuestions"));
@@ -76,7 +68,6 @@ export default {
           snapshot.forEach(doc => {
             // check local storage for doc id
             // only build out poll if doc id not seen
-            // might have to change to question
             if (!localStorage.getItem(doc.id)) {
               const poll = doc.data();
               poll.id = doc.id;
@@ -94,7 +85,6 @@ export default {
         .catch(err => {
           console.log(err);
         });
-      // this.randomPoll[0] = polls[0];
     },
 
     storeSeenQs(choice) {
@@ -146,8 +136,6 @@ export default {
         .catch(err => {
           console.log(err);
         });
-      // after async function runs, in the then() push router to stats page
-      // maybe send info somehow to stats page?
     },
 
     shuffle(arr) {
@@ -159,7 +147,6 @@ export default {
         randomIdx = Math.floor(Math.random() * currIdx);
         currIdx--;
 
-        // swap ES6
         [arr[currIdx], arr[randomIdx]] = [arr[randomIdx], arr[currIdx]];
       }
       return arr;

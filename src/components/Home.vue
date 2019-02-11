@@ -7,7 +7,6 @@
 <script>
 import Poll from "@/components/Poll";
 import db from "@/db";
-// import util from '@/util.js'
 
 export default {
   name: "Home",
@@ -22,6 +21,5 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 </style>
