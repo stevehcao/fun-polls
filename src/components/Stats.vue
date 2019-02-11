@@ -13,7 +13,6 @@
 
 
 <script>
-// url params will have doc.id as doc_id, can use it for DB
 import db from "@/db";
 import DoughnutChart from "./DoughnutChart.vue";
 export default {
@@ -36,7 +35,6 @@ export default {
       },
       // optional settings
       options: {
-        // cutoutPercentage: // (0-100) to change size of doughnut
         animation: {
           animateScale: true
         },
@@ -70,8 +68,6 @@ export default {
   methods: {
     // format chart data from query
     formatChartData() {
-      // loop over answers array in poll object
-      // build out this.chartData object
       const ansArray = this.poll.answers;
       ansArray.forEach(ans => {
         this.chartData.labels.push(ans.choice);

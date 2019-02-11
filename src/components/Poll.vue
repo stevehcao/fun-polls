@@ -10,9 +10,6 @@
       <form @submit.prevent="countVote(voted)">
         <div class="answer-choices">
           <div v-for="(answer, idx) in polls[0].answers" :key="idx">
-            <!-- before materialize -->
-            <!-- <input type="radio" :id="answer.id" :value="answer.id" v-model="voted">
-            <label :for="answer.id">{{ answer.choice }}</label>-->
             <label>
               <input name="group1" type="radio" :value="answer.id" v-model="voted" checked>
               <span>{{answer.choice}}</span>
@@ -77,7 +74,6 @@ export default {
           // check if there is something to build in case you have seen all the questions
           if (queryPolls.length > 0) {
             this.polls = queryPolls;
-            // shuffle polls here and only display one to the top
             this.shuffle(this.polls);
           }
           this.loaded = true;
@@ -99,7 +95,6 @@ export default {
         ansArr.push(ansObj);
 
         seenQ++;
-        // console.log(seenQ, "SEEN");
         localStorage.setItem("seenQs", seenQ);
         localStorage.setItem("ansArr", JSON.stringify(ansArr));
       } else {
