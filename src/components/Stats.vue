@@ -4,9 +4,9 @@
       Stats for
       <span class="question-title blue-text accent-2">"{{ poll.question }}"</span> poll
     </h3>
-    <!-- show data vis here -->
     <!-- pass in data from query as props -->
     <DoughnutChart :chartData="chartData" :options="options"/>
+    <button class="btn" @click="voteAgain">Vote Again</button>
   </div>
   <div v-else class="lds-dual-ring"></div>
 </template>
@@ -70,6 +70,11 @@ export default {
       ansArray.forEach(ans => {
         this.chartData.labels.push(ans.choice);
         this.chartData.datasets[0].data.push(ans.votes);
+      });
+    },
+    voteAgain() {
+      this.$router.push({
+        name: "Home"
       });
     }
   }
